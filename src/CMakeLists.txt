@@ -1,1 +1,1 @@
-add_executable(main main.cu)
+add_executable(main main.cu v1.cu)

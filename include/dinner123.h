@@ -1,9 +1,8 @@
 #ifndef DINNER123_H
 #define DINNER123_H
 
-#include <cstdio>
+#include <bits/stdc++.h>
 #include <cuda_runtime.h>
-#include <chrono>
 
 #define CHECK(call)\
 {\
