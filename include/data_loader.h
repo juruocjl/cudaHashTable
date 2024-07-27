@@ -5,6 +5,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <cassert>
+#include "dinner123.h"
 template<class T>
 class Loader{
   private:
@@ -12,9 +13,10 @@ class Loader{
   FILE *fp;
   size_t T_sz,tot_sz,buf_size;
   T *buf,*p1,*p2;
-
+  CTimer *TM;
   public:
-  Loader(const char *file, int buffer_size = 1 << 18) {
+  Loader(const char *file, CTimer *_, int buffer_size = 1 << 18) {
+    TM = _;
     fp = fopen(file, "rb");
     if (fp == NULL){
       printf("No such file");
@@ -37,7 +39,13 @@ class Loader{
   }
   T get() {
     if (p1 == p2) {
+      if (TM != NULL) {
+        TM -> stop();
+      }
       p2 = (p1 = buf) + fread(buf, 1, buf_size, fp) / T_sz;
+      if (TM != NULL) {
+        TM -> start();
+      }
     }
     T res = *p1;
     p1 ++;

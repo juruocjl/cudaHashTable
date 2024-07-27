@@ -10,16 +10,19 @@
 template<class T>
 class Checker{
   private:
-  data_loader a;
+  Loader<T> a;
+  size_t tot, ok;
+  bool flag;
   public:
-  Writer(const char *file, int buffer_size = 1 << 18) : a(file, buffer_size){}
-  ~Writer(void) {}
+  Checker(const char *file, CTimer *_, int buffer_size = 1 << 18) : a(file, _, buffer_size = buffer_size), flag(1), tot(0), ok(0) {}
+  ~Checker(void) {}
   void put(T x) {
-    if (p1 == p2) {
-        reflush();
-    }
-    *p1 = x;
-    p1++;
+    tot++;
+    ok += (x == a.get());
+  }
+  double acc() {
+    assert(tot == a.count());
+    return 1. * ok / tot;
   }
 };
 #endif
